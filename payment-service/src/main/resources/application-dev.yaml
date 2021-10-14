@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://payment-db:5432/payment_db
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    url: jdbc:postgresql://payment-db:5432/payment_db
+  kafka:
+    bootstrap-servers: kafka-broker:9092

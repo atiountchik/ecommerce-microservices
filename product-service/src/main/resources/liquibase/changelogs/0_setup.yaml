@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: admin
+
+  - changeSet:
+      id: 1
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: timestamp with time zone
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: last_update_date
+                  type: timestamp with time zone
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: price
+                  type: real
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: stock_amount
+                  type: int
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: weight
+                  type: real
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: country
+                  type: char(2)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: SKU
+                  type: UUID
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: seller_id
+                  type: UUID
+                  constraints:
+                    unique: false
+                    nullable: false

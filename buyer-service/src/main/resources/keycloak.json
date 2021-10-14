@@ -1,0 +1,8 @@
+{
+  "realm": "buyer-realm",
+  "auth-server-url" : "http://auth-keycloak:8080/auth",
+  "resource" : "buyer-service",
+  "credentials": {
+    "secret": "4f8570d4-459d-4652-a046-3db396642465"
+  }
+}

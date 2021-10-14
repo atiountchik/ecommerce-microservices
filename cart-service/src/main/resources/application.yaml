@@ -1,0 +1,47 @@
+# Webserver configs
+server:
+  port: 8087
+  servlet:
+    contextPath: /api/cart
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cart_db
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 10
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    default-schema: public
+    liquibase-schema: public
+    password: password
+    url: jdbc:postgresql://localhost:5432/cart_db
+    user: admin
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: cart-consumers
+      value-deserializer: com.ecommerce.sdk.serdes.deserializer.ClearCartKafkaDeserializer
+
+keycloak:
+  realm: buyer-realm
+  resource: cart-service
+  auth-server-url: https://localhost/auth
+  ssl-required: external
+  credentials:
+    secret: 39d928cb-2bc3-4b86-8635-9b766f2d06bd
+  bearer-only: true
+  use-resource-role-mappings: false
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

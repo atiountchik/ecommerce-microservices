@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://seller-db:5432/seller_db
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    url: jdbc:postgresql://seller-db:5432/seller_db
+  kafka:
+    bootstrap-servers: kafka-broker:9092
+
+keycloak:
+  auth-server-url: http://auth-keycloak:8080/auth

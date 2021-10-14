@@ -1,0 +1,8 @@
+{
+  "realm": "seller-realm",
+  "auth-server-url" : "http://auth-keycloak:8080/auth",
+  "resource" : "seller-service",
+  "credentials": {
+    "secret": "863148d4-66a3-44c8-b876-58c9bdb6fbca"
+  }
+}

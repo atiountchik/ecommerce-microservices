@@ -1,0 +1,1224 @@
+{
+	"info": {
+		"_postman_id": "ec7e18df-c21c-42d8-80de-99778540c24b",
+		"name": "Ecommerce - Cart service",
+		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "item",
+					"item": [
+						{
+							"name": "addItem",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": {{price}},\n    \"quantity\": {{quantity}},\n    \"sku\": \"{{sku}}\",\n    \"weight\": {{weight}}\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/cart/v1/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"cart",
+										"v1",
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "updateItem",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"buyerId\": \"urn:uuid:88a8c22c-f7d6-fee6-ca82-e5f3361f3613\",\n    \"creationDate\": \"1997-02-28T05:46:01.013Z\",\n    \"id\": -60251474,\n    \"lastUpdateDate\": \"1977-01-24T12:22:32.820Z\",\n    \"price\": 336808.9474761933,\n    \"quantity\": -57990434,\n    \"sku\": \"ebd16380-0ea6-1112-e642-0bfcfa56794c\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/cart/v1/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"cart",
+										"v1",
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "deleteItem",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"buyerId\": \"urn:uuid:88a8c22c-f7d6-fee6-ca82-e5f3361f3613\",\n    \"creationDate\": \"1997-02-28T05:46:01.013Z\",\n    \"id\": -60251474,\n    \"lastUpdateDate\": \"1977-01-24T12:22:32.820Z\",\n    \"price\": 336808.9474761933,\n    \"quantity\": -57990434,\n    \"sku\": \"ebd16380-0ea6-1112-e642-0bfcfa56794c\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/cart/v1/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"cart",
+										"v1",
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "clearCart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cart/v1/clear",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cart",
+								"v1",
+								"clear"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/clear?authenticated=false&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"clear"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "false"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/clear?authenticated=false&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"clear"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "false"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/clear?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"clear"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/clear?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"clear"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "getCart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cart/v1/get",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cart",
+								"v1",
+								"get"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/get?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"get"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/get?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"get"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/get?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"get"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/get?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"get"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"buyerId\": \"7c9e011d-f5de-90b3-ad9a-cebff05446fd\",\n  \"creationDate\": \"2016-05-17T22:38:18.005Z\",\n  \"id\": 56250524,\n  \"lastUpdateDate\": \"2016-05-12T01:43:10.912Z\",\n  \"price\": -39332309.741308965,\n  \"quantity\": -57353531,\n  \"sku\": \"ed485d6d-b3a4-d1f5-e69e-b5bd7c96429e\"\n },\n {\n  \"buyerId\": \"urn:uuid:3002fe7e-b769-88a0-7c9f-30fd29136cb9\",\n  \"creationDate\": \"1985-04-03T16:10:04.089Z\",\n  \"id\": 83054414,\n  \"lastUpdateDate\": \"1955-01-07T17:50:27.666Z\",\n  \"price\": 19793874.901865795,\n  \"quantity\": 68493331,\n  \"sku\": \"urn:uuid:157c1091-1ff9-a4e9-6366-78627d775ed2\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "placeOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"orderStatusToken\", response.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cart/v1/place",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cart",
+								"v1",
+								"place"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/place?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"place"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/place?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"place"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/place?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"place"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/place?authenticated=true&authorities[0].authority=tempor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"place"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "tempor"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token_buyer}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//cart-api:8087/api/cart"
+		}
+	]
+}

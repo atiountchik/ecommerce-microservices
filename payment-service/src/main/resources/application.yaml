@@ -1,0 +1,40 @@
+# Webserver configs
+server:
+  port: 8085
+  servlet:
+    contextPath: /api/payment
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_db
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 10
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    default-schema: public
+    liquibase-schema: public
+    password: password
+    url: jdbc:postgresql://localhost:5432/payment_db
+    user: admin
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: payment-consumers
+      value-deserializer: com.ecommerce.sdk.serdes.deserializer.PlaceOrderPaymentKafkaDeserializer
+
+stripe:
+  apiKey: sk_test_51Jj8baAso9Gy3rBzhpp9VNhRDm3GweKamNrCNnviY5EEclPO77AJssq8KQ5AdvMt1QxqMZgZ65NCPY9WFO2wYMC400xgWCE8Id
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

@@ -1,0 +1,313 @@
+version: '3.8'
+
+networks:
+  keycloak_ntw:
+  buyer_ntw:
+  seller_ntw:
+  product_ntw:
+  payment_ntw:
+  order_ntw:
+  cart_ntw:
+  kafka_ntw:
+
+services:
+  kafka-zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    networks:
+      - kafka_ntw
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:6.2.0
+    depends_on:
+      - kafka-zookeeper
+    networks:
+      - kafka_ntw
+    ports:
+      - 29092:29092
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092
+      KAFKA_CREATE_TOPICS: "place-order-cart-topic:1:1,place-order-buyer-topic:1:1,place-order-topic:1:1,place-order-payment-topic:1:1,switch-order-status-topic:1:1,clear-cart-topic:1:1,reduce-product-quantities-topic:1:1"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+  auth_db:
+    image: postgres:14.0
+    volumes:
+      - auth_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks:
+      - keycloak_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d keycloak --username=keycloak" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-keycloak:
+    image: jboss/keycloak:15.0.2
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: auth_db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      PROXY_ADDRESS_FORWARDING: 'true'
+      KEYCLOAK_FRONTEND_URL: https://localhost/auth
+      JAVA_OPTS_APPEND: "-Dkeycloak.profile.feature.upload_scripts=enabled"
+      KEYCLOAK_IMPORT: "/keycloak/buyer-realm.json,/keycloak/seller-realm.json"
+    networks:
+      - keycloak_ntw
+    ports:
+      - 8080:8080
+    depends_on:
+      - auth_db
+    volumes:
+      - ./sso-server-config:/keycloak
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 3
+
+  buyer-db:
+    image: postgres:14.0
+    volumes:
+      - buyer_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: buyer_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - buyer_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d buyer_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  buyer-api:
+    image: buyer-api
+    build:
+      context: ./buyer-service
+      dockerfile: Dockerfile
+    depends_on:
+      - buyer-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - buyer_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8082" ]
+
+  seller-db:
+    image: postgres:14.0
+    volumes:
+      - seller_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: seller_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - seller_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d seller_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  seller-api:
+    image: seller-api
+    build:
+      context: ./seller-service
+      dockerfile: Dockerfile
+    depends_on:
+      - seller-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - seller_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8083" ]
+
+  product-db:
+    image: postgres:14.0
+    volumes:
+      - product_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: product_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - product_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d product_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-api:
+    image: product-api
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    depends_on:
+      - product-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - product_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8084" ]
+
+  payment-db:
+    image: postgres:14.0
+    volumes:
+      - payment_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: payment_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - payment_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d payment_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  payment-api:
+    image: payment-api
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile
+    depends_on:
+      - payment-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - payment_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8085" ]
+
+  order-db:
+    image: postgres:14.0
+    volumes:
+      - order_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: order_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - order_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d order_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order-api:
+    image: order-api
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    depends_on:
+      - order-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - order_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8086" ]
+
+  cart-db:
+    image: postgres:14.0
+    volumes:
+      - cart_db_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: cart_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - cart_ntw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d cart_db --username=admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cart-api:
+    image: cart-api
+    build:
+      context: ./cart-service
+      dockerfile: Dockerfile
+    depends_on:
+      - cart-db
+      - auth-keycloak
+      - kafka-broker
+    networks:
+      - cart_ntw
+      - keycloak_ntw
+      - kafka_ntw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8087" ]
+
+  nginx-proxy:
+    image: nginx:1.21.3
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    networks:
+      - keycloak_ntw
+      - buyer_ntw
+      - cart_ntw
+      - seller_ntw
+      - product_ntw
+      - payment_ntw
+      - order_ntw
+    volumes:
+      - ./proxy-config/cripto:/cripto
+      - ./proxy-config/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - seller-api
+      - buyer-api
+      - cart-api
+      - product-api
+      - payment-api
+      - order-api
+
+volumes:
+  auth_db_vol:
+  buyer_db_vol:
+  seller_db_vol:
+  product_db_vol:
+  payment_db_vol:
+  order_db_vol:
+  cart_db_vol:

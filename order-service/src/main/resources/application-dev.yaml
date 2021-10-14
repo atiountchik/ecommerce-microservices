@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://order-db:5432/order_db
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    url: jdbc:postgresql://order-db:5432/order_db
+  kafka:
+    bootstrap-servers: kafka-broker:9092

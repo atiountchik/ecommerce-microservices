@@ -1,0 +1,37 @@
+# Webserver configs
+server:
+  port: 8084
+  servlet:
+    contextPath: /api/product
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product_db
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 10
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    default-schema: public
+    liquibase-schema: public
+    password: password
+    url: jdbc:postgresql://localhost:5432/product_db
+    user: admin
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: product-consumers
+      value-deserializer: com.ecommerce.sdk.serdes.deserializer.PlaceOrderCartKafkaDeserializer
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

@@ -1,0 +1,45 @@
+# Webserver configs
+server:
+  port: 8083
+  servlet:
+    contextPath: /api/seller
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/seller_db
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 10
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+    default-schema: public
+    liquibase-schema: public
+    password: password
+    url: jdbc:postgresql://localhost:5432/seller_db
+    user: admin
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: seller-consumers
+
+keycloak:
+  realm: seller-realm
+  resource: seller-service
+  auth-server-url: https://localhost/auth
+  ssl-required: external
+  credentials:
+    secret: 863148d4-66a3-44c8-b876-58c9bdb6fbca
+  use-resource-role-mappings: false
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

@@ -1,0 +1,1163 @@
+{
+	"info": {
+		"_postman_id": "be153d9c-9abe-44af-adf1-00dc9fb43c7c",
+		"name": "Ecommerce - Product service",
+		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "getProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_buyer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/product/v1/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"country\": \"irure\",\n  \"creationDate\": \"1998-09-13T16:40:29.328Z\",\n  \"id\": 26410129,\n  \"lastUpdateDate\": \"1997-03-07T21:44:11.642Z\",\n  \"name\": \"eu laboris cupidatat ea\",\n  \"price\": 674032.0889471173,\n  \"sellerId\": \"urn:uuid:dc53262f-8b66-c9be-743a-814d08719d6e\",\n  \"stockAmount\": -73087305\n },\n {\n  \"country\": \"adipisicing deserunt in nisi\",\n  \"creationDate\": \"1972-02-11T12:54:06.882Z\",\n  \"id\": 80988189,\n  \"lastUpdateDate\": \"1945-02-23T05:04:51.651Z\",\n  \"name\": \"magna in\",\n  \"price\": 13176680.826650426,\n  \"sellerId\": \"28a78b31-da7e-f486-4cfa-eb11d2e180f3\",\n  \"stockAmount\": 97382591\n }\n]"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "getProductsSeller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_seller}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/product/v1/seller/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"v1",
+								"seller",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"country\": \"irure\",\n  \"creationDate\": \"1998-09-13T16:40:29.328Z\",\n  \"id\": 26410129,\n  \"lastUpdateDate\": \"1997-03-07T21:44:11.642Z\",\n  \"name\": \"eu laboris cupidatat ea\",\n  \"price\": 674032.0889471173,\n  \"sellerId\": \"urn:uuid:dc53262f-8b66-c9be-743a-814d08719d6e\",\n  \"stockAmount\": -73087305\n },\n {\n  \"country\": \"adipisicing deserunt in nisi\",\n  \"creationDate\": \"1972-02-11T12:54:06.882Z\",\n  \"id\": 80988189,\n  \"lastUpdateDate\": \"1945-02-23T05:04:51.651Z\",\n  \"name\": \"magna in\",\n  \"price\": 13176680.826650426,\n  \"sellerId\": \"28a78b31-da7e-f486-4cfa-eb11d2e180f3\",\n  \"stockAmount\": 97382591\n }\n]"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "registerProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"sku\", response.sku);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_seller}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"{{country}}\",\n    \"name\": \"{{productName}}\",\n    \"price\": {{price}},\n    \"stockAmount\": {{stockAmount}},\n    \"weight\": {{weight}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/v1/seller/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"v1",
+								"seller",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "updateProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"sku\", response.sku);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_seller}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"creationDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"lastUpdateDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"name\": \"Product #12345\",\n    \"price\": 1.75,\n    \"weight\": 1.75,\n    \"stockAmount\": 10,\n    \"country\": \"PT\",\n    \"sku\": \"63974a47-4dc1-4282-8257-c8807046d5ec\",\n    \"sellerId\": \"f5203fde-afee-4a60-ae1a-3841bd240f38\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/v1/seller/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"v1",
+								"seller",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_seller}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"creationDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"lastUpdateDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"name\": \"Product #123\",\n    \"price\": 1.75,\n    \"weight\": 1.75,\n    \"stockAmount\": 10,\n    \"country\": \"PT\",\n    \"sku\": \"63974a47-4dc1-4282-8257-c8807046d5ec\",\n    \"sellerId\": \"f5203fde-afee-4a60-ae1a-3841bd240f38\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/v1/seller/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"v1",
+								"seller",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"country\": \"AS\",\n    \"name\": \"labore eu\",\n    \"price\": 78175203.75797358,\n    \"stockAmount\": -12973942\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/products?authenticated=true&authorities[0].authority=dolore consectetur",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "authenticated",
+											"value": "true"
+										},
+										{
+											"key": "authorities[0].authority",
+											"value": "dolore consectetur"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//localhost:8084/api/product",
+			"type": "string"
+		}
+	]
+}

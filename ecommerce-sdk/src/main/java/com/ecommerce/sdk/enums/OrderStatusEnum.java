@@ -1,0 +1,13 @@
+package com.ecommerce.sdk.enums;
+
+public enum OrderStatusEnum {
+    PENDING_INFO_CONFIRMATION,
+    PENDING_PAYMENT,
+    PROCESSED,
+    CANCELED,
+    REFUNDED,
+    ERROR_EMPTY_CART,
+    ERROR_INVALID_PRODUCT,
+    ERROR_CORRUPTED_PRODUCT,
+    ERROR_UNKOWN_BUYER
+}

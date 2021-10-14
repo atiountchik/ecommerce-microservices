@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "f7c5dc17-8507-44c5-8f42-9184f3c326f3",
+		"name": "Ecommerce - Seller service",
+		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token_seller\", response.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/v1/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"token\": \"Excepteur exercitation cupidatat\"\n}"
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"closesAt\": \"{{closingTime}}\",\n    \"opensAt\": \"{{openingTime}}\",\n    \"country\": \"{{country}}\",\n    \"countryVatNumber\": \"{{countryVatNumber}}\",\n    \"email\": \"{{email}}\",\n    \"latitude\": {{$randomLatitude}},\n    \"longitude\": {{$randomLongitude}},\n    \"name\": \"{{$randomFullName}}\",\n    \"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/v1/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_seller}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/seller/v1/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"v1",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"token\": \"labore eu i\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//seller-api:8083/api/seller",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+{
+  "realm": "buyer-realm",
+  "auth-server-url" : "http://auth-keycloak:8080/auth",
+  "resource" : "order-service",
+  "bearer-only": true,
+  "ssl-required": "external",
+  "use-resource-role-mappings": false,
+  "credentials": {
+    "secret": "10f13722-90c9-4952-b7a8-3c9370c56961"
+  }
+}
