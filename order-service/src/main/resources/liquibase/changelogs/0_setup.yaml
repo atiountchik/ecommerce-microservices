@@ -48,6 +48,12 @@ databaseChangeLog:
                     unique: false
                     nullable: false
               - column:
+                  name: buyer_country
+                  type: char(2)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
                   name: buyer_id
                   type: UUID
                   constraints:
@@ -96,6 +102,12 @@ databaseChangeLog:
               - column:
                   name: weight
                   type: real
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: country
+                  type: char(2)
                   constraints:
                     unique: false
                     nullable: false

@@ -1,5 +1,6 @@
 package com.ecommerce.order.repository.dbo;
 
+import com.ecommerce.sdk.enums.CountryEnum;
 import com.ecommerce.sdk.enums.OrderStatusEnum;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="orders", schema="public")
+@Table(name = "orders", schema = "public")
 public class OrderDBO {
     @Id
     @Column(name = "id")
@@ -32,26 +33,30 @@ public class OrderDBO {
     @Column(name = "vat")
     private Double vat;
 
+    @Column(name = "buyer_country")
+    private String buyerCountry;
+
     @Column(name = "buyer_id")
     private UUID buyerId;
 
-    @OneToMany(mappedBy = "orderDBO", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orderDBO", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<OrderItemDBO> orderItemDBOList;
 
-    public OrderDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, OrderStatusEnum status, UUID statusUuid, Double vat, UUID buyerId,List<OrderItemDBO> orderItemDBOList) {
+    public OrderDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, OrderStatusEnum status, UUID statusUuid, Double vat, CountryEnum buyerCountry, UUID buyerId, List<OrderItemDBO> orderItemDBOList) {
         this.id = id;
         this.creationDate = creationDate;
         this.lastUpdateDate = lastUpdateDate;
         this.status = status.name();
         this.statusUuid = statusUuid;
         this.vat = vat;
+        this.buyerCountry = buyerCountry.name();
         this.buyerId = buyerId;
         this.orderItemDBOList = orderItemDBOList;
     }
 
-    public OrderDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, OrderStatusEnum status, UUID statusUuid, Double vat, UUID buyerId) {
-        this(id, creationDate, lastUpdateDate, status, statusUuid, vat, buyerId, null);
+    public OrderDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, OrderStatusEnum status, UUID statusUuid, Double vat, CountryEnum buyerCountry, UUID buyerId) {
+        this(id, creationDate, lastUpdateDate, status, statusUuid, vat, buyerCountry, buyerId, null);
     }
 
     public OrderDBO() {
@@ -125,16 +130,24 @@ public class OrderDBO {
         this.orderItemDBOList = orderItemDBOList;
     }
 
+    public String getBuyerCountry() {
+        return buyerCountry;
+    }
+
+    public void setBuyerCountry(String buyerCountry) {
+        this.buyerCountry = buyerCountry;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDBO orderDBO = (OrderDBO) o;
-        return Objects.equals(id, orderDBO.id) && Objects.equals(creationDate, orderDBO.creationDate) && Objects.equals(lastUpdateDate, orderDBO.lastUpdateDate) && Objects.equals(status, orderDBO.status) && Objects.equals(statusUuid, orderDBO.statusUuid) && Objects.equals(vat, orderDBO.vat) && Objects.equals(buyerId, orderDBO.buyerId) && Objects.equals(orderItemDBOList, orderDBO.orderItemDBOList);
+        return Objects.equals(id, orderDBO.id) && Objects.equals(creationDate, orderDBO.creationDate) && Objects.equals(lastUpdateDate, orderDBO.lastUpdateDate) && Objects.equals(status, orderDBO.status) && Objects.equals(statusUuid, orderDBO.statusUuid) && Objects.equals(vat, orderDBO.vat) && Objects.equals(buyerCountry, orderDBO.buyerCountry) && Objects.equals(buyerId, orderDBO.buyerId) && Objects.equals(orderItemDBOList, orderDBO.orderItemDBOList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, lastUpdateDate, status, statusUuid, vat, buyerId, orderItemDBOList);
+        return Objects.hash(id, creationDate, lastUpdateDate, status, statusUuid, vat, buyerCountry, buyerId, orderItemDBOList);
     }
 }

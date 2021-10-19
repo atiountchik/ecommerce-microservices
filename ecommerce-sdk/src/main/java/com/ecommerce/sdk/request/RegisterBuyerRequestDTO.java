@@ -11,7 +11,9 @@ public class RegisterBuyerRequestDTO {
     @NotBlank
     private String password;
     private CountryEnum country;
+
     @NotBlank
+    @Size(max = 200)
     private String name;
 
     @DecimalMin("-90.0")

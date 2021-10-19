@@ -104,11 +104,14 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                // .mvcMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").hasRole("BUYER_API_ADMIN")
+                // .mvcMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").hasRole("SELLER_API_ADMIN")
                 .mvcMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/v1/login").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/v1/register").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/v1/profile").hasAnyRole(EcommerceAuthorities.SELLER_USER.name(), EcommerceAuthorities.SELLER_ADMIN.name())
+                .mvcMatchers(HttpMethod.PUT, "/v1/profile").hasAnyRole(EcommerceAuthorities.SELLER_USER.name(), EcommerceAuthorities.SELLER_ADMIN.name())
+                .regexMatchers(HttpMethod.GET, "/v1/profile/([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})").hasAnyRole(EcommerceAuthorities.SELLER_USER.name(), EcommerceAuthorities.SELLER_ADMIN.name())
+                .regexMatchers(HttpMethod.DELETE, "/v1/profile/([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})").hasAnyRole(EcommerceAuthorities.SELLER_USER.name(), EcommerceAuthorities.SELLER_ADMIN.name())
                 .anyRequest().denyAll().and().csrf().disable();
     }
 

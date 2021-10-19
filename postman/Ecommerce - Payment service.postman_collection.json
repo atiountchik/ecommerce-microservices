@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "82323958-900f-49fd-863f-78be94c3ba18",
+		"_postman_id": "a2fb70e3-33e2-4299-9eeb-052c8a09c963",
 		"name": "Ecommerce - Payment service",
 		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -28,7 +28,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"amount\": 19.68,\n    \"cardNumber\": \"4242424242424242\",\n    \"cvc\": 123,\n    \"expMonth\": 2,\n    \"expYear\": 2022\n}"
+					"raw": "{\n    \"amount\": {{total}},\n    \"cardNumber\": \"4242424242424242\",\n    \"cvc\": 123,\n    \"expMonth\": 2,\n    \"expYear\": 2022\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/payment/v1/pay/{{orderStatusToken}}",

@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface PaymentRepository extends JpaRepository<PaymentDBO, Long> {
 
     PaymentDBO findByStatusUuid(UUID statusUuid);
+
+    List<PaymentDBO> findByBuyerId(UUID buyerId);
 }

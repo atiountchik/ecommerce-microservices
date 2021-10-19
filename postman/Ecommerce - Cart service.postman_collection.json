@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ec7e18df-c21c-42d8-80de-99778540c24b",
+		"_postman_id": "ca9b4110-3fa3-458a-b0b2-34679273c78a",
 		"name": "Ecommerce - Cart service",
 		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -14,6 +14,19 @@
 					"item": [
 						{
 							"name": "addItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"itemStatusToken\", response.token);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -24,7 +37,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"price\": {{price}},\n    \"quantity\": {{quantity}},\n    \"sku\": \"{{sku}}\",\n    \"weight\": {{weight}}\n}"
+									"raw": "{\n    \"sku\": \"{{sku}}\",\n    \"quantity\": {{quantity}}\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/cart/v1/item",
@@ -35,6 +48,253 @@
 										"cart",
 										"v1",
 										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": -13505150.33205846,\n    \"quantity\": 72168552,\n    \"sku\": \"328fa1bb-6cdf-fc59-901c-d29704c32bfa\",\n    \"weight\": -33928936.04596421\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/item?authenticated=true&authorities[0].authority=tempor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"item"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "tempor"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "addOrUpdateItemStatus",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/cart/v1/item/{{itemStatusToken}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"cart",
+										"v1",
+										"item",
+										"{{itemStatusToken}}"
 									]
 								}
 							},
@@ -253,6 +513,19 @@
 						},
 						{
 							"name": "updateItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"itemStatusToken\", response.token);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -263,7 +536,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"buyerId\": \"urn:uuid:88a8c22c-f7d6-fee6-ca82-e5f3361f3613\",\n    \"creationDate\": \"1997-02-28T05:46:01.013Z\",\n    \"id\": -60251474,\n    \"lastUpdateDate\": \"1977-01-24T12:22:32.820Z\",\n    \"price\": 336808.9474761933,\n    \"quantity\": -57990434,\n    \"sku\": \"ebd16380-0ea6-1112-e642-0bfcfa56794c\"\n}"
+									"raw": "{\n    \"quantity\": 2,\n    \"sku\": \"{{sku}}\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/cart/v1/item",
@@ -473,26 +746,28 @@
 						{
 							"name": "deleteItem",
 							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"buyerId\": \"urn:uuid:88a8c22c-f7d6-fee6-ca82-e5f3361f3613\",\n    \"creationDate\": \"1997-02-28T05:46:01.013Z\",\n    \"id\": -60251474,\n    \"lastUpdateDate\": \"1977-01-24T12:22:32.820Z\",\n    \"price\": 336808.9474761933,\n    \"quantity\": -57990434,\n    \"sku\": \"ebd16380-0ea6-1112-e642-0bfcfa56794c\"\n}"
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_buyer}}",
+											"type": "string"
+										}
+									]
 								},
+								"method": "DELETE",
+								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/cart/v1/item",
+									"raw": "{{baseUrl}}/cart/v1/item/{{sku}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"cart",
 										"v1",
-										"item"
+										"item",
+										"{{sku}}"
 									]
 								}
 							},
@@ -827,6 +1102,19 @@
 				},
 				{
 					"name": "getCart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"orderStatusToken\", response.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],

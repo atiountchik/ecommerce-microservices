@@ -1,38 +1,30 @@
 package com.ecommerce.sdk.request;
 
+import com.ecommerce.sdk.domain.CartItemDTO;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class ReduceProductQuantitiesRequestDTO {
     @NotNull
-    private UUID sku;
-    @Min(1)
-    private Integer quantity;
+    private List<CartItemDTO> cartItemDTOList;
 
-    public ReduceProductQuantitiesRequestDTO(UUID sku, Integer quantity) {
-        this.sku = sku;
-        this.quantity = quantity;
+    public ReduceProductQuantitiesRequestDTO(List<CartItemDTO> cartItemDTOList) {
+        this.cartItemDTOList = cartItemDTOList;
     }
 
     public ReduceProductQuantitiesRequestDTO() {
     }
 
-    public UUID getSku() {
-        return sku;
+    public List<CartItemDTO> getCartItemDTOList() {
+        return cartItemDTOList;
     }
 
-    public void setSku(UUID sku) {
-        this.sku = sku;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setCartItemDTOList(List<CartItemDTO> cartItemDTOList) {
+        this.cartItemDTOList = cartItemDTOList;
     }
 
     @Override
@@ -40,11 +32,11 @@ public class ReduceProductQuantitiesRequestDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReduceProductQuantitiesRequestDTO that = (ReduceProductQuantitiesRequestDTO) o;
-        return Objects.equals(sku, that.sku) && Objects.equals(quantity, that.quantity);
+        return Objects.equals(cartItemDTOList, that.cartItemDTOList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sku, quantity);
+        return Objects.hash(cartItemDTOList);
     }
 }

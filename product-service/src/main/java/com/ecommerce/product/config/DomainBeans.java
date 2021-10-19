@@ -2,8 +2,10 @@ package com.ecommerce.product.config;
 
 import com.ecommerce.sdk.enums.KafkaTopics;
 import com.ecommerce.sdk.request.PlaceOrderBuyerRequestDTO;
+import com.ecommerce.sdk.request.ProductAvailabilityRequestDTO;
 import com.ecommerce.sdk.request.ReduceProductQuantitiesRequestDTO;
 import com.ecommerce.sdk.request.SwitchOrderStatusDTO;
+import com.ecommerce.sdk.response.ProductAvailabilityResponseDTO;
 import com.ecommerce.sdk.serdes.serializer.EcommerceKafkaSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -54,22 +56,52 @@ public class DomainBeans {
     }
 
     @Bean
-    public ConsumerFactory<String, List<ReduceProductQuantitiesRequestDTO>> reduceProductQuantitiesConsumerFactory() {
+    @Qualifier(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC)
+    public KafkaProducer<String, ProductAvailabilityResponseDTO> kafkaProducerProductAvailability() {
+        Properties properties = new Properties();
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaBrokerAddr);
+        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, EcommerceKafkaSerializer.class.getName());
+
+        return new KafkaProducer<>(properties);
+    }
+
+    @Bean
+    public ConsumerFactory<String, ReduceProductQuantitiesRequestDTO> reduceProductQuantitiesConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaBrokerAddr);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, this.kafkaGroupId);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
-                new JsonDeserializer<>(List.class));
+                new JsonDeserializer<>(ReduceProductQuantitiesRequestDTO.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, List<ReduceProductQuantitiesRequestDTO>>
-    reduceProductQuantitiesConsumerFactoryContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, List<ReduceProductQuantitiesRequestDTO>> factory
+    public ConcurrentKafkaListenerContainerFactory<String, ReduceProductQuantitiesRequestDTO>
+    reduceProductQuantitiesContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ReduceProductQuantitiesRequestDTO> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(reduceProductQuantitiesConsumerFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, ProductAvailabilityRequestDTO> productAvailabilityRequestConsumerFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaBrokerAddr);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, this.kafkaGroupId);
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        return new DefaultKafkaConsumerFactory<>(props,
+                new StringDeserializer(),
+                new JsonDeserializer<>(ProductAvailabilityRequestDTO.class));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, ProductAvailabilityRequestDTO> productAvailabilityRequestContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ProductAvailabilityRequestDTO> factory
+                = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(productAvailabilityRequestConsumerFactory());
         return factory;
     }
 

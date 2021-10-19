@@ -1,6 +1,6 @@
 package com.ecommerce.cart.repository;
 
-import com.ecommerce.cart.repository.dbo.CartDBO;
+import com.ecommerce.cart.repository.dbo.CartItemDBO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends JpaRepository<CartDBO, Long> {
-    List<CartDBO> findByBuyerId(UUID buyerId);
+public interface CartItemsRepository extends JpaRepository<CartItemDBO, Long> {
+    List<CartItemDBO> findByBuyerId(UUID buyerId);
 
-    CartDBO findByBuyerIdAndSku(UUID buyerId, UUID sku);
+    CartItemDBO findByBuyerIdAndSku(UUID buyerId, UUID sku);
 
     void deleteByBuyerId(UUID buyerId);
 }

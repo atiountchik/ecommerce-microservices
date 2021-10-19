@@ -11,14 +11,14 @@ import com.ecommerce.sdk.request.*;
 import com.ecommerce.sdk.response.LoginResponseDTO;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.authorization.client.AuthzClient;
-import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.authorization.client.AuthorizationDeniedException;
+import org.keycloak.authorization.client.util.HttpResponseException;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -28,10 +28,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import java.net.UnknownHostException;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,77 +38,62 @@ import java.util.stream.Collectors;
 @Validated
 public class BuyerService {
 
-    @Value("${keycloak.realm}")
-    private String realm;
-
-    @Value("${keycloak.resource}")
-    private String clientId;
-
-    private final Keycloak keycloak;
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private final BuyerRepository buyerRepository;
 
     private final KafkaProducer<String, PlaceOrderRequestDTO> kafkaProducerPlaceOrderTopic;
     private final KafkaProducer<String, SwitchOrderStatusDTO> kafkaProducerSwitchStatus;
 
+    private KeycloakService keycloakService;
+
     @Autowired
-    public BuyerService(BuyerRepository buyerRepository, Keycloak keycloak,
+    public BuyerService(BuyerRepository buyerRepository,
+                        KeycloakService keycloakService,
                         KafkaProducer<String, PlaceOrderRequestDTO> kafkaProducerPlaceOrderTopic,
                         @Qualifier(KafkaTopics.SWITCH_ORDER_STATUS_TOPIC) KafkaProducer<String, SwitchOrderStatusDTO> kafkaProducerSwitchStatus) {
         this.buyerRepository = buyerRepository;
-        this.keycloak = keycloak;
+        this.keycloakService = keycloakService;
         this.kafkaProducerPlaceOrderTopic = kafkaProducerPlaceOrderTopic;
         this.kafkaProducerSwitchStatus = kafkaProducerSwitchStatus;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) throws HttpResponseException, AuthorizationDeniedException, UnknownHostException {
         String email = loginRequestDTO.getEmail();
         String password = loginRequestDTO.getPassword();
-        String token = AuthzClient.create().authorization(email, password).authorize().getToken();
+        String token = this.keycloakService.obtainToken(email, password);
         return new LoginResponseDTO(token);
     }
 
+
     @Transactional
-    public void register(RegisterBuyerRequestDTO inputData) throws InvalidInputException, UserConflictException, DeleteUserException {
+    public void register(RegisterBuyerRequestDTO inputData) throws InvalidInputException, UserConflictException, DeleteUserException, UnknownHostException {
         if (inputData == null) {
             throw new InvalidInputException("buyer.api.register.error.nullInput");
         }
 
-        UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setUsername(inputData.getEmail());
-        userRepresentation.setEmail(inputData.getEmail());
-        userRepresentation.setEnabled(true);
+        String email = inputData.getEmail();
+        String password = inputData.getPassword();
+        UUID userId = this.keycloakService.register(email, password);
 
-        CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
-        credentialRepresentation.setTemporary(false);
-        credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
-        credentialRepresentation.setValue(inputData.getPassword());
-        userRepresentation.setCredentials(Arrays.asList(credentialRepresentation));
-
-        Response response = this.keycloak.realm(this.realm).users().create(userRepresentation);
-        if (response.getStatusInfo().getFamily() != Response.Status.Family.SUCCESSFUL) {
-            if (response.getStatus() == HttpStatus.CONFLICT.value()) {
-                throw new UserConflictException("buyer.api.register.error.buyerAlreadyExists");
-            }
-        }
-        userRepresentation = this.keycloak.realm(this.realm).users().search(inputData.getEmail()).get(0);
-        UUID userId = UUID.fromString(userRepresentation.getId());
         if (this.buyerRepository.findByAuthId(userId) != null) {
-            response = this.keycloak.realm(this.realm).users().delete(inputData.getEmail());
-            if (response.getStatusInfo().getFamily() != Response.Status.Family.SUCCESSFUL) {
-                throw new DeleteUserException("buyer.api.register.error.failedToRevertUserCreation");
-            }
+            this.keycloakService.deleteUser(userId);
             throw new UserConflictException("buyer.api.register.error.buyerInformationAlreadyPresent");
         }
+
         ZonedDateTime now = ZonedDateTime.now();
         BuyerDBO entity = new BuyerDBO(0l, now, now, inputData.getName(), inputData.getLatitude(), inputData.getLongitude(), inputData.getCountry(), userId);
 
         this.buyerRepository.save(entity);
     }
 
-    public BuyerDBO getProfile(Authentication authentication) {
-        String userId = authentication.getName();
-        return this.buyerRepository.findByAuthId(UUID.fromString(userId));
+    public BuyerDBO getProfile(Authentication authentication) throws CountryNotFoundException {
+        UUID userId = getBuyerId(authentication);
+        return this.buyerRepository.findByAuthId(userId);
+    }
+
+    private UUID getBuyerId(Authentication authentication) {
+        return UUID.fromString(authentication.getName());
     }
 
     private boolean isAdmin(Authentication authentication) {
@@ -120,18 +103,61 @@ public class BuyerService {
 
     @KafkaListener(topics = KafkaTopics.PLACE_ORDER_BUYER_TOPIC)
     @Transactional
-    public void placeOrderBuyer(@Valid PlaceOrderBuyerRequestDTO placeOrderBuyerRequestDTO) throws  IllegalArgumentException {
+    public void placeOrderBuyer(@Valid PlaceOrderBuyerRequestDTO placeOrderBuyerRequestDTO) throws IllegalArgumentException, CountryNotFoundException {
         if (placeOrderBuyerRequestDTO == null) {
             throw new IllegalArgumentException("buyer.api.placeOrder.error.nullInput");
         }
-        BuyerDBO buyerDBO = this.buyerRepository.findByAuthId(placeOrderBuyerRequestDTO.getBuyerId());
+        UUID buyerId = placeOrderBuyerRequestDTO.getBuyerId();
+        BuyerDBO buyerDBO = this.buyerRepository.findByAuthId(buyerId);
         if (buyerDBO == null) {
             this.kafkaProducerSwitchStatus.send(new ProducerRecord<>(KafkaTopics.SWITCH_ORDER_STATUS_TOPIC, new SwitchOrderStatusDTO(OrderStatusEnum.ERROR_UNKOWN_BUYER, placeOrderBuyerRequestDTO.getStatusUuid())));
-            // throw new BuyerDoesNotExistException("buyer.api.placeOrder.error.buyerDoesNotExist");
+            logger.error("buyer.api.placeOrder.error.buyerDoesNotExist | " + buyerId);
+            return;
         }
         PlaceOrderRequestDTO placeOrderRequestDTO = new PlaceOrderRequestDTO();
         placeOrderRequestDTO.setPlaceOrderBuyerRequestDTO(placeOrderBuyerRequestDTO);
-        placeOrderRequestDTO.setCountry(buyerDBO.getCountry());
+        placeOrderRequestDTO.setCountry(CountryEnum.getCountryEnum(buyerDBO.getCountry()));
         this.kafkaProducerPlaceOrderTopic.send(new ProducerRecord<>(KafkaTopics.PLACE_ORDER_TOPIC, placeOrderRequestDTO));
+    }
+
+    @Transactional
+    public BuyerDBO updateProfile(Authentication authentication, BuyerDTO buyerDTO) throws UserDoesNotExistException, AccessDeniedException {
+        UUID buyerId = getBuyerId(authentication);
+        BuyerDBO fetchedBuyerDBO = this.buyerRepository.findById(buyerDTO.getId()).orElse(null);
+        if (fetchedBuyerDBO == null) {
+            throw new UserDoesNotExistException("buyer.api.update.error.idNotFound");
+        }
+        if (!isAdmin(authentication) && !fetchedBuyerDBO.getAuthId().equals(buyerId)) {
+            throw new AccessDeniedException("buyer.api.update.error.forbidden");
+        }
+        fetchedBuyerDBO.setCountry(buyerDTO.getCountry().name());
+        fetchedBuyerDBO.setLastUpdateDate(ZonedDateTime.now());
+        fetchedBuyerDBO.setLatitude(buyerDTO.getLatitude());
+        fetchedBuyerDBO.setLongitude(buyerDTO.getLongitude());
+        fetchedBuyerDBO.setName(buyerDTO.getName());
+        return this.buyerRepository.save(fetchedBuyerDBO);
+    }
+
+
+    public void deleteProfile(Authentication authentication, UUID buyerIdToDelete) throws UserDoesNotExistException, AccessDeniedException, UnknownHostException, DeleteUserException {
+        BuyerDBO fetchedBuyerDBO = checkPermissionsAndFetchExistingUser(authentication, buyerIdToDelete);
+        this.keycloakService.deleteUser(buyerIdToDelete);
+        this.buyerRepository.delete(fetchedBuyerDBO);
+    }
+
+    private BuyerDBO checkPermissionsAndFetchExistingUser(Authentication authentication, UUID buyerIdToDelete) throws UserDoesNotExistException {
+        UUID buyerId = getBuyerId(authentication);
+        BuyerDBO fetchedBuyerDBO = this.buyerRepository.findByAuthId(buyerIdToDelete);
+        if (fetchedBuyerDBO == null) {
+            throw new UserDoesNotExistException("buyer.api.delete.error.idNotFound");
+        }
+        if (!isAdmin(authentication) && !fetchedBuyerDBO.getAuthId().equals(buyerId)) {
+            throw new AccessDeniedException("buyer.api.delete.error.forbidden");
+        }
+        return fetchedBuyerDBO;
+    }
+
+    public BuyerDBO getProfile(Authentication authentication, UUID buyerId) throws UserDoesNotExistException {
+        return checkPermissionsAndFetchExistingUser(authentication, buyerId);
     }
 }

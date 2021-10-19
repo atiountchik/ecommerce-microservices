@@ -8,7 +8,7 @@ databaseChangeLog:
       author: liquibase
       changes:
         - createTable:
-            tableName: carts
+            tableName: cart_items
             columns:
               - column:
                   name: id
@@ -36,18 +36,6 @@ databaseChangeLog:
                     unique: false
                     nullable: false
               - column:
-                  name: price
-                  type: real
-                  constraints:
-                    unique: false
-                    nullable: false
-              - column:
-                  name: weight
-                  type: real
-                  constraints:
-                    unique: false
-                    nullable: false
-              - column:
                   name: quantity
                   type: int
                   constraints:
@@ -59,3 +47,85 @@ databaseChangeLog:
                   constraints:
                     unique: false
                     nullable: false
+        - createTable:
+            tableName: item_availability_requests
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: timestamp with time zone
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: last_update_date
+                  type: timestamp with time zone
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: new_quantity
+                  type: int
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: product_availability
+                  type: varchar(32)
+                  constraints:
+                    unique: false
+                    nullable: true
+              - column:
+                  name: cart_item_id
+                  type: int
+                  constraints:
+                    unique: false
+                    nullable: false
+        - createTable:
+            tableName: failed_item_availability_requests
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: status_date
+                  type: timestamp with time zone
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: product_availability
+                  type: varchar(32)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: item_availability_request_id
+                  type: UUID
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: buyer_id
+                  type: UUID
+                  constraints:
+                    unique: false
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_item_id
+            baseTableName: item_availability_requests
+            baseTableSchemaName: public
+            constraintName: fk_item_availability_requests_to_cart_items
+            referencedColumnNames: id
+            referencedTableName: cart_items
+            referencedTableSchemaName: public
+            validate: true

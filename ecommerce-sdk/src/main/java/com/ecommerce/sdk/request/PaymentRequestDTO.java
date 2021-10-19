@@ -1,5 +1,7 @@
 package com.ecommerce.sdk.request;
 
+import com.ecommerce.sdk.enums.CountryEnum;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,14 +12,14 @@ public class PaymentRequestDTO {
 
     @DecimalMin("0.01")
     private Double amount;
-    @NotBlank
-    private String country;
+    @NotNull
+    private CountryEnum country;
     @NotNull
     private UUID statusUuid;
     @NotNull
     private UUID buyerId;
 
-    public PaymentRequestDTO(Double amount, String country, UUID statusUuid, UUID buyerId) {
+    public PaymentRequestDTO(Double amount, CountryEnum country, UUID statusUuid, UUID buyerId) {
         this.amount = amount;
         this.country = country;
         this.statusUuid = statusUuid;
@@ -35,11 +37,11 @@ public class PaymentRequestDTO {
         this.amount = amount;
     }
 
-    public String getCountry() {
+    public CountryEnum getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(CountryEnum country) {
         this.country = country;
     }
 

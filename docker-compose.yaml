@@ -35,7 +35,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092
-      KAFKA_CREATE_TOPICS: "place-order-cart-topic:1:1,place-order-buyer-topic:1:1,place-order-topic:1:1,place-order-payment-topic:1:1,switch-order-status-topic:1:1,clear-cart-topic:1:1,reduce-product-quantities-topic:1:1"
+      KAFKA_CREATE_TOPICS: "place-order-cart-topic:1:1,place-order-buyer-topic:1:1,place-order-topic:1:1,place-order-payment-topic:1:1,switch-order-status-topic:1:1,clear-cart-topic:1:1,reduce-product-quantities-topic:1:1,check-item-availability-request-topic:1:1,check-item-availability-response-topic:1:1,get-cart-request-topic:1:1,get-cart-response-topic:1:1"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -74,8 +74,6 @@ services:
       KEYCLOAK_IMPORT: "/keycloak/buyer-realm.json,/keycloak/seller-realm.json"
     networks:
       - keycloak_ntw
-    ports:
-      - 8080:8080
     depends_on:
       - auth_db
     volumes:

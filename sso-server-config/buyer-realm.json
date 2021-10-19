@@ -63,6 +63,14 @@
         "attributes": {}
       },
       {
+        "id": "7b59a4cf-9e06-4e6b-9c50-6560ef498ce6",
+        "name": "ROLE_BUYER_ADMIN",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "buyer-realm",
+        "attributes": {}
+      },
+      {
         "id": "df32e4eb-b2ef-4d00-b38c-e2e99f3d71cc",
         "name": "default-roles-buyer-realm",
         "description": "${role_default-roles}",
@@ -485,6 +493,28 @@
         "buyer-service": [
           "uma_protection"
         ]
+      },
+      "notBefore": 0,
+      "groups": []
+    },
+    {
+      "id": "7a84debc-d358-4eb1-b981-6a636cf4a450",
+      "createdTimestamp": 1634126892339,
+      "username": "admin-buyer@ecommerce.com",
+      "credentials" : [ {
+        "type": "password",
+        "value": "password"
+      } ],
+      "enabled": true,
+      "totp": false,
+      "emailVerified": false,
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-buyer-realm",
+        "ROLE_BUYER_ADMIN"
+      ],
+      "clientRoles": {
       },
       "notBefore": 0,
       "groups": []

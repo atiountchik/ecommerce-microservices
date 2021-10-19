@@ -12,6 +12,9 @@ public class ClearCartRequestDTO {
         this.buyerId = buyerId;
     }
 
+    public ClearCartRequestDTO() {
+    }
+
     public UUID getBuyerId() {
         return buyerId;
     }

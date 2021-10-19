@@ -107,7 +107,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 // .mvcMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").hasRole("BUYER_API_ADMIN")
                 .mvcMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
                 .regexMatchers(HttpMethod.GET, "/v1/status/([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
-                .mvcMatchers(HttpMethod.GET, "/v1/seller/history").hasAnyRole(EcommerceAuthorities.SELLER_USER.name(), EcommerceAuthorities.SELLER_ADMIN.name())
                 .mvcMatchers(HttpMethod.GET, "/v1/buyer/history").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
                 .anyRequest().denyAll().and().csrf().disable();
     }

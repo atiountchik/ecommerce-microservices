@@ -3,14 +3,11 @@ package com.ecommerce.product.service;
 import com.ecommerce.product.repository.ProductRepository;
 import com.ecommerce.product.repository.dbo.ProductDBO;
 import com.ecommerce.sdk.domain.CartItemDTO;
-import com.ecommerce.sdk.enums.EcommerceAuthorities;
-import com.ecommerce.sdk.enums.KafkaTopics;
-import com.ecommerce.sdk.enums.OrderStatusEnum;
-import com.ecommerce.sdk.exceptions.CartIsEmptyForBuyerException;
-import com.ecommerce.sdk.exceptions.CorruptedProductException;
-import com.ecommerce.sdk.exceptions.ProductAlreadyRegisteredException;
-import com.ecommerce.sdk.exceptions.ProductDoesNotExistException;
+import com.ecommerce.sdk.domain.CartItemDetailsDTO;
+import com.ecommerce.sdk.enums.*;
+import com.ecommerce.sdk.exceptions.*;
 import com.ecommerce.sdk.request.*;
+import com.ecommerce.sdk.response.ProductAvailabilityResponseDTO;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +32,16 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final KafkaProducer<String, PlaceOrderBuyerRequestDTO> kafkaProducerPlaceOrderTopic;
     private final KafkaProducer<String, SwitchOrderStatusDTO> kafkaProducerSwitchStatus;
+    private final KafkaProducer<String, ProductAvailabilityResponseDTO> kafkaProducerProductAvailability;
 
     @Autowired
     public ProductService(ProductRepository productRepository, KafkaProducer<String, PlaceOrderBuyerRequestDTO> kafkaProducerPlaceOrderTopic,
-                          @Qualifier(KafkaTopics.SWITCH_ORDER_STATUS_TOPIC) KafkaProducer<String, SwitchOrderStatusDTO> kafkaProducerSwitchStatus) {
+                          @Qualifier(KafkaTopics.SWITCH_ORDER_STATUS_TOPIC) KafkaProducer<String, SwitchOrderStatusDTO> kafkaProducerSwitchStatus,
+                          @Qualifier(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC) KafkaProducer<String, ProductAvailabilityResponseDTO> kafkaProducerProductAvailability) {
         this.productRepository = productRepository;
         this.kafkaProducerPlaceOrderTopic = kafkaProducerPlaceOrderTopic;
         this.kafkaProducerSwitchStatus = kafkaProducerSwitchStatus;
+        this.kafkaProducerProductAvailability = kafkaProducerProductAvailability;
     }
 
     public List<ProductDBO> getAllProducts() {
@@ -71,31 +71,34 @@ public class ProductService {
     }
 
     @Transactional
-    public void deleteProduct(Authentication authentication, ProductDBO productDBO) throws ProductDoesNotExistException, AccessDeniedException {
-        if (!isSellerAdmin(authentication)) {
-            UUID sellerId = getSellerId(authentication);
-            ProductDBO productDBOFetchedFromDB = this.productRepository.findById(productDBO.getId()).orElse(null);
-            if (productDBOFetchedFromDB == null) {
-                throw new ProductDoesNotExistException("product.api.delete.error.productDoesNotExist");
-            } else if (!productDBOFetchedFromDB.getSellerId().equals(sellerId)) {
-                throw new AccessDeniedException("product.api.delete.error.productDoesNotBelongToThisOwner");
-            }
+    public void deleteProduct(Authentication authentication, UUID sku) throws ProductDoesNotExistException, AccessDeniedException {
+        UUID sellerId = getSellerId(authentication);
+        ProductDBO productDBOFetchedFromDB = this.productRepository.findBySku(sku);
+        if (productDBOFetchedFromDB == null) {
+            throw new ProductDoesNotExistException("product.api.delete.error.productDoesNotExist");
         }
-        this.productRepository.deleteById(productDBO.getId());
+        if (!isSellerAdmin(authentication) && !productDBOFetchedFromDB.getSellerId().equals(sellerId)) {
+            throw new AccessDeniedException("product.api.delete.error.productDoesNotBelongToThisOwner");
+        }
+        this.productRepository.delete(productDBOFetchedFromDB);
     }
 
-    public void updateProduct(Authentication authentication, ProductDBO productDBO) throws ProductDoesNotExistException, AccessDeniedException {
-        if (!isSellerAdmin(authentication)) {
-            UUID sellerId = getSellerId(authentication);
-            ProductDBO productDBOFetchedFromDB = this.productRepository.findById(productDBO.getId()).orElse(null);
-            if (productDBOFetchedFromDB == null) {
-                throw new ProductDoesNotExistException("product.api.delete.error.productDoesNotExist");
-            } else if (!productDBOFetchedFromDB.getSellerId().equals(sellerId)) {
-                throw new AccessDeniedException("product.api.delete.error.productDoesNotBelongToThisOwner");
-            }
+    public ProductDBO updateProduct(Authentication authentication, ProductDTO productDTO) throws UserDoesNotExistException, AccessDeniedException {
+        UUID sellerId = getSellerId(authentication);
+        ProductDBO fetchedBuyerDBO = this.productRepository.findById(productDTO.getId()).orElse(null);
+        if (fetchedBuyerDBO == null) {
+            throw new UserDoesNotExistException("product.api.update.error.idNotFound");
         }
-        productDBO.setLastUpdateDate(ZonedDateTime.now());
-        this.productRepository.save(productDBO);
+        if (!isSellerAdmin(authentication) && !fetchedBuyerDBO.getSellerId().equals(sellerId)) {
+            throw new AccessDeniedException("product.api.update.error.forbidden");
+        }
+        fetchedBuyerDBO.setCountry(productDTO.getCountry().name());
+        fetchedBuyerDBO.setLastUpdateDate(ZonedDateTime.now());
+        fetchedBuyerDBO.setPrice(productDTO.getPrice());
+        fetchedBuyerDBO.setWeight(productDTO.getWeight());
+        fetchedBuyerDBO.setStockAmount(productDTO.getStockAmount());
+        fetchedBuyerDBO.setName(productDTO.getName());
+        return this.productRepository.save(fetchedBuyerDBO);
     }
 
     private boolean isSellerAdmin(Authentication authentication) {
@@ -105,7 +108,7 @@ public class ProductService {
 
     @KafkaListener(topics = KafkaTopics.PLACE_ORDER_CART_TOPIC)
     @Transactional
-    public void placeOrderFromCart(@Valid ValidateCartRequestDTO cartRequestDTO) {
+    public void placeOrderFromCart(@Valid ValidateCartRequestDTO cartRequestDTO) throws CountryNotFoundException {
         try {
             sanitizePlaceOrderCartRequest(cartRequestDTO);
         } catch (CartIsEmptyForBuyerException e) {
@@ -120,34 +123,36 @@ public class ProductService {
         }
         List<CartItemDTO> cartItemDTOList = cartRequestDTO.getCartItemDTOList();
         PlaceOrderBuyerRequestDTO placeOrderBuyerRequestDTO = new PlaceOrderBuyerRequestDTO();
-        Map<String, List<CartItemDTO>> countryToCartItemsMap = new HashMap<>();
-        List<CartItemDTO> cartItemDTOS;
+        Map<CountryEnum, List<CartItemDetailsDTO>> countryToCartItemsMap = new HashMap<>();
+        List<CartItemDetailsDTO> cartItemDTOS;
         ProductDBO productDBOIter;
+        CountryEnum countryIter;
         for (CartItemDTO cartItem : cartItemDTOList) {
             productDBOIter = this.productRepository.findBySku(cartItem.getSku());
-            String country = productDBOIter.getCountry();
-            cartItemDTOS = countryToCartItemsMap.get(country);
+            countryIter = CountryEnum.getCountryEnum(productDBOIter.getCountry());
+            cartItemDTOS = countryToCartItemsMap.get(countryIter);
             if (cartItemDTOS == null || cartItemDTOS.isEmpty()) {
                 cartItemDTOS = new ArrayList<>();
-                countryToCartItemsMap.put(country, cartItemDTOS);
+                countryToCartItemsMap.put(countryIter, cartItemDTOS);
             }
-            cartItemDTOS.add(cartItem);
+            cartItemDTOS.add(new CartItemDetailsDTO(cartItem, productDBOIter.getPrice(), productDBOIter.getWeight(), countryIter));
         }
         placeOrderBuyerRequestDTO.setMapItemsGroupedByCountry(countryToCartItemsMap);
         placeOrderBuyerRequestDTO.setBuyerId(cartRequestDTO.getBuyerId());
         placeOrderBuyerRequestDTO.setStatusUuid(cartRequestDTO.getRequestId());
+        placeOrderBuyerRequestDTO.setDryRun(cartRequestDTO.getDryRun());
         this.kafkaProducerPlaceOrderTopic.send(new ProducerRecord<>(KafkaTopics.PLACE_ORDER_BUYER_TOPIC, placeOrderBuyerRequestDTO));
 
     }
 
-    @KafkaListener(topics = KafkaTopics.REDUCE_PRODUCT_QUANTITIES_TOPIC, containerFactory = "reduceProductQuantitiesConsumerFactoryContainerFactory")
+    @KafkaListener(topics = KafkaTopics.REDUCE_PRODUCT_QUANTITIES_TOPIC, containerFactory = "reduceProductQuantitiesContainerFactory")
     @Transactional
-    public void placeOrderFromCart(@Valid List<ReduceProductQuantitiesRequestDTO> reduceProductQuantitiesRequestDTOList) {
+    public void placeOrderFromCart(@Valid ReduceProductQuantitiesRequestDTO reduceProductQuantitiesRequestDTO) {
         ProductDBO productDBO;
         ZonedDateTime now = ZonedDateTime.now();
-        for (ReduceProductQuantitiesRequestDTO requestDTO : reduceProductQuantitiesRequestDTOList) {
-            productDBO = this.productRepository.findBySku(requestDTO.getSku());
-            productDBO.setStockAmount(productDBO.getStockAmount() - requestDTO.getQuantity());
+        for (CartItemDTO cartItemDTO : reduceProductQuantitiesRequestDTO.getCartItemDTOList()) {
+            productDBO = this.productRepository.findBySku(cartItemDTO.getSku());
+            productDBO.setStockAmount(productDBO.getStockAmount() - cartItemDTO.getQuantity());
             productDBO.setLastUpdateDate(now);
             this.productRepository.save(productDBO);
         }
@@ -162,12 +167,31 @@ public class ProductService {
             ProductDBO productDBO = this.productRepository.findBySku(cartItem.getSku());
             if (productDBO == null) {
                 throw new ProductDoesNotExistException("product.api.placeOrder.error.nonExistentProduct");
-            } else if (!productDBO.getPrice().equals(cartItem.getPrice())) {
-                throw new CorruptedProductException("product.api.placeOrder.error.priceMismatchForAProduct");
             } else if (productDBO.getStockAmount().compareTo(cartItem.getQuantity()) < 0) {
-                throw new CorruptedProductException("product.api.placeOrder.error.insuficientStockForAProduct");
+                throw new CorruptedProductException("product.api.placeOrder.error.insufficientStockForAProduct");
             }
         }
     }
 
+    @KafkaListener(topics = KafkaTopics.CHECK_ITEM_AVAILABILITY_REQUEST_TOPIC, containerFactory = "productAvailabilityRequestContainerFactory")
+    @Transactional
+    public void checkProductAvailability(@Valid ProductAvailabilityRequestDTO productAvailabilityRequestDTO) {
+        UUID sku = productAvailabilityRequestDTO.getCartItemDTO().getSku();
+        UUID requestId = productAvailabilityRequestDTO.getRequestId();
+        ProductDBO productDBO = this.productRepository.findBySku(sku);
+        if (productDBO == null) {
+            this.kafkaProducerProductAvailability.send(new ProducerRecord<>(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC, new ProductAvailabilityResponseDTO(requestId, ProductAvailabilityEnum.NOT_FOUND)));
+            return;
+        } else if (productDBO.getStockAmount() == 0) {
+            this.kafkaProducerProductAvailability.send(new ProducerRecord<>(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC, new ProductAvailabilityResponseDTO(requestId, ProductAvailabilityEnum.UNAVAILABLE)));
+            return;
+        }
+        Integer stockAmount = productDBO.getStockAmount();
+        Integer quantity = productAvailabilityRequestDTO.getCartItemDTO().getQuantity();
+        if (quantity > stockAmount) {
+            this.kafkaProducerProductAvailability.send(new ProducerRecord<>(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC, new ProductAvailabilityResponseDTO(requestId, ProductAvailabilityEnum.EXCEEDS_AVAILABLE_QUANTITY)));
+        } else {
+            this.kafkaProducerProductAvailability.send(new ProducerRecord<>(KafkaTopics.CHECK_ITEM_AVAILABILITY_RESPONSE_TOPIC, new ProductAvailabilityResponseDTO(requestId, ProductAvailabilityEnum.AVAILABLE)));
+        }
+    }
 }

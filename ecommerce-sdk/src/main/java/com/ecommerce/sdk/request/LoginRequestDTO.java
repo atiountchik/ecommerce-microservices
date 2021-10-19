@@ -2,9 +2,10 @@ package com.ecommerce.sdk.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoginRequestDTO {
+public class LoginRequestDTO implements Serializable {
 
     @Email
     private String email;

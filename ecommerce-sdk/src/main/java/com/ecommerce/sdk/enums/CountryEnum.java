@@ -1,5 +1,13 @@
 package com.ecommerce.sdk.enums;
 
+import com.ecommerce.sdk.exceptions.CountryNotFoundException;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * Taken from: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
  */
@@ -252,5 +260,20 @@ public enum CountryEnum {
     YT,
     ZA,
     ZM,
-    ZW
+    ZW;
+
+    private static Map<String, CountryEnum> mapCountryStringToEnum;
+
+    static {
+        mapCountryStringToEnum = new HashMap<>();
+        Arrays.stream(values()).forEach(countryEnum -> mapCountryStringToEnum.put(countryEnum.name(), countryEnum));
+    }
+
+    public static CountryEnum getCountryEnum(String countryCode) throws CountryNotFoundException {
+        CountryEnum countryEnum = mapCountryStringToEnum.get(countryCode);
+        if (countryEnum == null) {
+            throw new CountryNotFoundException();
+        }
+        return countryEnum;
+    }
 }

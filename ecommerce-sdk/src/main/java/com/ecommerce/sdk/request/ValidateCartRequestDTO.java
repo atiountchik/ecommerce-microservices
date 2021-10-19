@@ -14,11 +14,14 @@ public class ValidateCartRequestDTO {
     private UUID buyerId;
     @NotNull
     private UUID requestId;
+    @NotNull
+    private Boolean isDryRun;
 
-    public ValidateCartRequestDTO(List<CartItemDTO> cartItemDTOList, UUID buyerId, UUID requestId) {
+    public ValidateCartRequestDTO(List<CartItemDTO> cartItemDTOList, UUID buyerId, UUID requestId, Boolean isDryRun) {
         this.cartItemDTOList = cartItemDTOList;
         this.buyerId = buyerId;
         this.requestId = requestId;
+        this.isDryRun = isDryRun;
     }
 
     public ValidateCartRequestDTO() {
@@ -48,16 +51,24 @@ public class ValidateCartRequestDTO {
         this.requestId = requestId;
     }
 
+    public Boolean getDryRun() {
+        return isDryRun;
+    }
+
+    public void setDryRun(Boolean dryRun) {
+        isDryRun = dryRun;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ValidateCartRequestDTO that = (ValidateCartRequestDTO) o;
-        return Objects.equals(cartItemDTOList, that.cartItemDTOList) && Objects.equals(buyerId, that.buyerId) && Objects.equals(requestId, that.requestId);
+        return Objects.equals(cartItemDTOList, that.cartItemDTOList) && Objects.equals(buyerId, that.buyerId) && Objects.equals(requestId, that.requestId) && Objects.equals(isDryRun, that.isDryRun);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cartItemDTOList, buyerId, requestId);
+        return Objects.hash(cartItemDTOList, buyerId, requestId, isDryRun);
     }
 }

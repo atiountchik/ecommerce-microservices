@@ -1,20 +1,17 @@
 package com.ecommerce.cart.repository.dbo;
 
 import com.ecommerce.sdk.domain.CartItemDTO;
-import com.ecommerce.sdk.enums.CountryEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="carts", schema="public")
-public class CartDBO {
+@Table(name = "cart_items", schema = "public")
+public class CartItemDBO {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,30 +26,31 @@ public class CartDBO {
     @Column(name = "SKU")
     private UUID sku;
 
-    @Column(name = "price")
-    private Double price;
-
-    @Column(name = "weight")
-    private Double weight;
-
     @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "buyer_id")
     private UUID buyerId;
 
-    public CartDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, UUID sku, Double price, Double weight, Integer quantity, UUID buyerId) {
+    @OneToMany(mappedBy = "cartItemDBO", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<ItemAvailabilityRequestDBO> itemAvailabilityRequestDBOList;
+
+    public CartItemDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, UUID sku, Integer quantity, UUID buyerId, List<ItemAvailabilityRequestDBO> itemAvailabilityRequestDBOList) {
         this.id = id;
         this.creationDate = creationDate;
         this.lastUpdateDate = lastUpdateDate;
         this.sku = sku;
-        this.price = price;
-        this.weight = weight;
         this.quantity = quantity;
         this.buyerId = buyerId;
+        this.itemAvailabilityRequestDBOList = itemAvailabilityRequestDBOList;
     }
 
-    public CartDBO() {
+    public CartItemDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, UUID sku, Integer quantity, UUID buyerId) {
+        this(id, creationDate, lastUpdateDate, sku, quantity, buyerId, null);
+    }
+
+    public CartItemDBO() {
     }
 
     public Long getId() {
@@ -87,14 +85,6 @@ public class CartDBO {
         this.sku = sku;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -111,28 +101,28 @@ public class CartDBO {
         this.buyerId = buyerId;
     }
 
-    public Double getWeight() {
-        return weight;
+    public List<ItemAvailabilityRequestDBO> getItemAvailabilityRequestDBOList() {
+        return itemAvailabilityRequestDBOList;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setItemAvailabilityRequestDBOList(List<ItemAvailabilityRequestDBO> itemAvailabilityRequestDBOList) {
+        this.itemAvailabilityRequestDBOList = itemAvailabilityRequestDBOList;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CartDBO cartDBO = (CartDBO) o;
-        return Objects.equals(id, cartDBO.id) && Objects.equals(creationDate, cartDBO.creationDate) && Objects.equals(lastUpdateDate, cartDBO.lastUpdateDate) && Objects.equals(sku, cartDBO.sku) && Objects.equals(price, cartDBO.price) && Objects.equals(weight, cartDBO.weight) && Objects.equals(quantity, cartDBO.quantity) && Objects.equals(buyerId, cartDBO.buyerId);
+        CartItemDBO that = (CartItemDBO) o;
+        return Objects.equals(id, that.id) && Objects.equals(creationDate, that.creationDate) && Objects.equals(lastUpdateDate, that.lastUpdateDate) && Objects.equals(sku, that.sku) && Objects.equals(quantity, that.quantity) && Objects.equals(buyerId, that.buyerId) && Objects.equals(itemAvailabilityRequestDBOList, that.itemAvailabilityRequestDBOList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, lastUpdateDate, sku, price, weight, quantity, buyerId);
+        return Objects.hash(id, creationDate, lastUpdateDate, sku, quantity, buyerId, itemAvailabilityRequestDBOList);
     }
 
     public CartItemDTO toCartItemDTO() {
-        return new CartItemDTO(this.sku, this.price, this.quantity, this.weight);
+        return new CartItemDTO(this.sku, this.quantity);
     }
 }

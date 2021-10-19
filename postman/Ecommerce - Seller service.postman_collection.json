@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f7c5dc17-8507-44c5-8f42-9184f3c326f3",
+		"_postman_id": "1ce51328-26b7-4396-86b9-7445bdefffd6",
 		"name": "Ecommerce - Seller service",
 		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -9,6 +9,900 @@
 		{
 			"name": "v1",
 			"item": [
+				{
+					"name": "profile",
+					"item": [
+						{
+							"name": "sellerId",
+							"item": [
+								{
+									"name": "getSpecificSeller",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var response = JSON.parse(responseBody);",
+													"postman.setEnvironmentVariable(\"sellerId\", response.authId);",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token_seller}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/seller/v1/profile/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"seller",
+												"v1",
+												"profile",
+												""
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"authId\": \"urn:uuid:28057733-3a81-2cab-e714-824873ddb547\",\n \"closesAt\": {\n  \"hour\": -61253078,\n  \"minute\": 95538949,\n  \"nano\": 30813851,\n  \"offset\": {\n   \"id\": \"minim ea ips\",\n   \"rules\": {\n    \"fixedOffset\": true,\n    \"transitionRules\": [\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ],\n    \"transitions\": [\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ]\n   },\n   \"totalSeconds\": -80432847\n  },\n  \"second\": -17621799\n },\n \"country\": \"adipisicing non dolor eiusmod\",\n \"countryVatNumber\": \"id quis\",\n \"creationDate\": \"1963-03-14T20:14:44.480Z\",\n \"id\": -93195253,\n \"lastUpdateDate\": \"2000-06-01T15:14:16.174Z\",\n \"latitude\": -67694677.9300946,\n \"longitude\": -55128002.08065287,\n \"name\": \"labore incididunt Lorem\",\n \"opensAt\": {\n  \"hour\": -36764920,\n  \"minute\": 11309547,\n  \"nano\": 22734237,\n  \"offset\": {\n   \"id\": \"amet adipisicing\",\n   \"rules\": {\n    \"fixedOffset\": true,\n    \"transitionRules\": [\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ],\n    \"transitions\": [\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ]\n   },\n   \"totalSeconds\": 63021112\n  },\n  \"second\": 9977759\n }\n}"
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Forbidden",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "Forbidden",
+											"code": 403,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "deleteProfile",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token_seller}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/seller/v1/profile/{{sellerId}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"seller",
+												"v1",
+												"profile",
+												"{{sellerId}}"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Forbidden",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/v1/profile/:sellerId?authenticated=true&authorities[0].authority=id cillum",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"v1",
+														"profile",
+														":sellerId"
+													],
+													"query": [
+														{
+															"key": "authenticated",
+															"value": "true"
+														},
+														{
+															"key": "authorities[0].authority",
+															"value": "id cillum"
+														}
+													],
+													"variable": [
+														{
+															"key": "sellerId"
+														}
+													]
+												}
+											},
+											"status": "Forbidden",
+											"code": 403,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "getProfile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"sellerId\", response.authId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_seller}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/seller/v1/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"seller",
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"authId\": \"urn:uuid:28057733-3a81-2cab-e714-824873ddb547\",\n \"closesAt\": {\n  \"hour\": -61253078,\n  \"minute\": 95538949,\n  \"nano\": 30813851,\n  \"offset\": {\n   \"id\": \"minim ea ips\",\n   \"rules\": {\n    \"fixedOffset\": true,\n    \"transitionRules\": [\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ],\n    \"transitions\": [\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ]\n   },\n   \"totalSeconds\": -80432847\n  },\n  \"second\": -17621799\n },\n \"country\": \"adipisicing non dolor eiusmod\",\n \"countryVatNumber\": \"id quis\",\n \"creationDate\": \"1963-03-14T20:14:44.480Z\",\n \"id\": -93195253,\n \"lastUpdateDate\": \"2000-06-01T15:14:16.174Z\",\n \"latitude\": -67694677.9300946,\n \"longitude\": -55128002.08065287,\n \"name\": \"labore incididunt Lorem\",\n \"opensAt\": {\n  \"hour\": -36764920,\n  \"minute\": 11309547,\n  \"nano\": 22734237,\n  \"offset\": {\n   \"id\": \"amet adipisicing\",\n   \"rules\": {\n    \"fixedOffset\": true,\n    \"transitionRules\": [\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dayOfMonthIndicator\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dayOfWeek\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"localTime\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"midnightEndOfDay\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"month\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"standardOffset\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"timeDefinition\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ],\n    \"transitions\": [\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     },\n     {\n      \"dateTimeAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"dateTimeBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"duration\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"instant\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetAfter\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"offsetBefore\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"overlap\": {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     }\n    ]\n   },\n   \"totalSeconds\": 63021112\n  },\n  \"second\": 9977759\n }\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "updateProfile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"sellerId\", response.authId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_seller}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/seller/v1/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"seller",
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"closesAt\": \"proident\",\n    \"country\": \"CX\",\n    \"id\": 68548422,\n    \"latitude\": 58342245.79205841,\n    \"longitude\": -74226377.28485721,\n    \"name\": \"officia dolore\",\n    \"opensAt\": \"amet in\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/v1/profile?authenticated=true&authorities[0].authority=id cillum",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"v1",
+												"profile"
+											],
+											"query": [
+												{
+													"key": "authenticated",
+													"value": "true"
+												},
+												{
+													"key": "authorities[0].authority",
+													"value": "id cillum"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
 				{
 					"name": "login",
 					"event": [
@@ -50,13 +944,109 @@
 					},
 					"response": [
 						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Duis aliqua\",\n    \"password\": \"minim ut ex eiusmod\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"token\": \"in anim lab\"\n}"
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Duis aliqua\",\n    \"password\": \"minim ut ex eiusmod\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Duis aliqua\",\n    \"password\": \"minim ut ex eiusmod\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Forbidden",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+									"raw": "{\n    \"email\": \"Duis aliqua\",\n    \"password\": \"minim ut ex eiusmod\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/v1/login",
@@ -88,7 +1078,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
+									"raw": "{\n    \"email\": \"Duis aliqua\",\n    \"password\": \"minim ut ex eiusmod\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/v1/login",
@@ -103,102 +1093,6 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"token\": \"Excepteur exercitation cupidatat\"\n}"
-						},
-						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"anim velit\",\n    \"password\": \"laboris Ut dolo\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -239,45 +1133,13 @@
 					},
 					"response": [
 						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/register",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"register"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
 							"name": "OK",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+									"raw": "{\n    \"closesAt\": \"esse occaecat laboris labore\",\n    \"country\": \"JO\",\n    \"countryVatNumber\": \"non minim dolore\",\n    \"email\": \"amet laboris\",\n    \"latitude\": -96378396.30320624,\n    \"longitude\": -28088917.908251166,\n    \"name\": \"laboris\",\n    \"opensAt\": \"non\",\n    \"password\": \"veniam elit\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/v1/register",
@@ -303,13 +1165,77 @@
 							"body": ""
 						},
 						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": \"esse occaecat laboris labore\",\n    \"country\": \"JO\",\n    \"countryVatNumber\": \"non minim dolore\",\n    \"email\": \"amet laboris\",\n    \"latitude\": -96378396.30320624,\n    \"longitude\": -28088917.908251166,\n    \"name\": \"laboris\",\n    \"opensAt\": \"non\",\n    \"password\": \"veniam elit\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"closesAt\": \"esse occaecat laboris labore\",\n    \"country\": \"JO\",\n    \"countryVatNumber\": \"non minim dolore\",\n    \"email\": \"amet laboris\",\n    \"latitude\": -96378396.30320624,\n    \"longitude\": -28088917.908251166,\n    \"name\": \"laboris\",\n    \"opensAt\": \"non\",\n    \"password\": \"veniam elit\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Forbidden",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+									"raw": "{\n    \"closesAt\": \"esse occaecat laboris labore\",\n    \"country\": \"JO\",\n    \"countryVatNumber\": \"non minim dolore\",\n    \"email\": \"amet laboris\",\n    \"latitude\": -96378396.30320624,\n    \"longitude\": -28088917.908251166,\n    \"name\": \"laboris\",\n    \"opensAt\": \"non\",\n    \"password\": \"veniam elit\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/v1/register",
@@ -341,7 +1267,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
+									"raw": "{\n    \"closesAt\": \"esse occaecat laboris labore\",\n    \"country\": \"JO\",\n    \"countryVatNumber\": \"non minim dolore\",\n    \"email\": \"amet laboris\",\n    \"latitude\": -96378396.30320624,\n    \"longitude\": -28088917.908251166,\n    \"name\": \"laboris\",\n    \"opensAt\": \"non\",\n    \"password\": \"veniam elit\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/v1/register",
@@ -365,233 +1291,6 @@
 							],
 							"cookie": [],
 							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"closesAt\": {\n        \"hour\": -67,\n        \"minute\": -104,\n        \"nano\": -54628204,\n        \"second\": -106\n    },\n    \"country\": \"SA\",\n    \"countryVatNumber\": \"Duis Lorem sed mollit\",\n    \"email\": \"cillum proident reprehenderit\",\n    \"latitude\": 42229223.84264356,\n    \"longitude\": 74801848.99640179,\n    \"name\": \"Lorem esse\",\n    \"opensAt\": {\n        \"hour\": 24,\n        \"minute\": -123,\n        \"nano\": -75665084,\n        \"second\": -31\n    },\n    \"password\": \"enim anim id\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/register",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"register"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "profile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token_seller}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/seller/v1/profile",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"seller",
-								"v1",
-								"profile"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"do dolor\",\n    \"password\": \"velit adipisicing laborum\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/v1/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"login"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"token\": \"labore eu i\"\n}"
 						}
 					]
 				}

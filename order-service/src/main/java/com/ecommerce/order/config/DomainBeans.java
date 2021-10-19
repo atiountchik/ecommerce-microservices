@@ -54,7 +54,7 @@ public class DomainBeans {
 
     @Bean
     @Qualifier(KafkaTopics.REDUCE_PRODUCT_QUANTITIES_TOPIC)
-    public KafkaProducer<String, List<ReduceProductQuantitiesRequestDTO>> kafkaProducerReduceProductQuantitiesTopic() {
+    public KafkaProducer<String, ReduceProductQuantitiesRequestDTO> kafkaProducerReduceProductQuantitiesTopic() {
         Properties properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaBrokerAddr);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());

@@ -109,6 +109,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/v1/login").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/v1/register").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/v1/profile").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
+                .mvcMatchers(HttpMethod.PUT, "/v1/profile").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
+                .regexMatchers(HttpMethod.GET, "/v1/profile/([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
+                .regexMatchers(HttpMethod.DELETE, "/v1/profile/([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})").hasAnyRole(EcommerceAuthorities.BUYER_USER.name(), EcommerceAuthorities.BUYER_ADMIN.name())
                 .anyRequest().denyAll().and().csrf().disable();
     }
 

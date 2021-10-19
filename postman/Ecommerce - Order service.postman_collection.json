@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "94244e8d-7c82-4c4d-bfa7-467f2b761f1f",
+		"_postman_id": "3df7469b-0354-486a-859b-fcad68328441",
 		"name": "Ecommerce - Order service",
 		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -198,6 +198,19 @@
 				},
 				{
 					"name": "getOrderStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"total\", response.paymentData.total);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",

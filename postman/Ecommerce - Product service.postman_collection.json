@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "be153d9c-9abe-44af-adf1-00dc9fb43c7c",
+		"_postman_id": "e6fb5f23-969b-45fa-a3f3-3dd44a4361fe",
 		"name": "Ecommerce - Product service",
 		"description": "Microservice for an Ecommerce platform\n\nContact Support:\n Email: at2394@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -914,18 +914,9 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"creationDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"lastUpdateDate\": \"2021-10-14T17:14:24.976936Z\",\n    \"name\": \"Product #123\",\n    \"price\": 1.75,\n    \"weight\": 1.75,\n    \"stockAmount\": 10,\n    \"country\": \"PT\",\n    \"sku\": \"63974a47-4dc1-4282-8257-c8807046d5ec\",\n    \"sellerId\": \"f5203fde-afee-4a60-ae1a-3841bd240f38\"\n}"
-						},
+						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/product/v1/seller/products",
+							"raw": "{{baseUrl}}/product/v1/seller/products/{{sku}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -933,7 +924,8 @@
 								"product",
 								"v1",
 								"seller",
-								"products"
+								"products",
+								"{{sku}}"
 							]
 						}
 					},

@@ -1,5 +1,9 @@
 package com.ecommerce.order.repository.dbo;
 
+import com.ecommerce.sdk.domain.CartItemDTO;
+import com.ecommerce.sdk.domain.CartItemDetailsDTO;
+import com.ecommerce.sdk.enums.CountryEnum;
+import com.ecommerce.sdk.exceptions.CountryNotFoundException;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -33,12 +37,15 @@ public class OrderItemDBO {
     @Column(name = "weight")
     private Double weight;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
+    @Column(name = "country")
+    private String country;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @JsonBackReference
     private OrderDBO orderDBO;
 
-    public OrderItemDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, UUID sku, Double price, Integer quantity, Double weight, OrderDBO orderDBO) {
+    public OrderItemDBO(Long id, ZonedDateTime creationDate, ZonedDateTime lastUpdateDate, UUID sku, Double price, Integer quantity, Double weight, CountryEnum country, OrderDBO orderDBO) {
         this.id = id;
         this.creationDate = creationDate;
         this.lastUpdateDate = lastUpdateDate;
@@ -46,6 +53,7 @@ public class OrderItemDBO {
         this.price = price;
         this.quantity = quantity;
         this.weight = weight;
+        this.country = country.name();
         this.orderDBO = orderDBO;
     }
 
@@ -116,16 +124,17 @@ public class OrderItemDBO {
         this.weight = weight;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItemDBO that = (OrderItemDBO) o;
-        return Objects.equals(id, that.id) && Objects.equals(creationDate, that.creationDate) && Objects.equals(lastUpdateDate, that.lastUpdateDate) && Objects.equals(sku, that.sku) && Objects.equals(price, that.price) && Objects.equals(quantity, that.quantity) && Objects.equals(weight, that.weight) && Objects.equals(orderDBO, that.orderDBO);
+    public String getCountry() {
+        return country;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, creationDate, lastUpdateDate, sku, price, quantity, weight, orderDBO);
+    public void setCountry(String country) {
+        this.country = country;
     }
+
+    public CartItemDetailsDTO toCartItemDetailsDTO() throws CountryNotFoundException {
+        CartItemDetailsDTO cartItemDetailsDTO = new CartItemDetailsDTO(new CartItemDTO(this.sku, this.quantity), this.price, this.weight, CountryEnum.getCountryEnum(this.country));
+        return cartItemDetailsDTO;
+    }
+
 }
